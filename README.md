@@ -1,3 +1,7 @@
+### Modified Version of ORB SLAM 2 for Distributed Architecture on AscTec Hummingbird
+
+This version of ORB SLAM 2 was modified so that it could be used on a distributed architecture sytem with an AscTec Hummingbird Quadrotor.  The processed position and obstacle data was streamed via sockets through ZeroMQ to a different ground station computer that computed trajectories for the quadrotor. The library libzmq is required to run and compile this code. 
+
 # ORB-SLAM2
 **Authors:** [Raul Mur-Artal](http://webdiis.unizar.es/~raulmur/), [Juan D. Tardos](http://webdiis.unizar.es/~jdtardos/), [J. M. M. Montiel](http://webdiis.unizar.es/~josemari/) and [Dorian Galvez-Lopez](http://doriangalvez.com/) ([DBoW2](https://github.com/dorian3d/DBoW2))
 

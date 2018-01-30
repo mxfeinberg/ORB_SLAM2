@@ -25,6 +25,9 @@
 #include <thread>
 #include <pangolin/pangolin.h>
 #include <iomanip>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 namespace ORB_SLAM2
 {
@@ -488,5 +491,11 @@ vector<cv::KeyPoint> System::GetTrackedKeyPointsUn()
     unique_lock<mutex> lock(mMutexState);
     return mTrackedKeyPointsUn;
 }
+cv::Point3f System::getFrame()
+{
+    unique_lock<mutex> lock(mMutexState);
+    pangolin::OpenGlMatrix curr_frame = mpViewer->getFrame();
+    return cv::Point3f(curr_frame.m[0], curr_frame.m[1], curr_frame.m[2] );
+} 
 
 } //namespace ORB_SLAM

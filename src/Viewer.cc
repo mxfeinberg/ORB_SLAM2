@@ -22,6 +22,9 @@
 #include <pangolin/pangolin.h>
 
 #include <mutex>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 namespace ORB_SLAM2
 {
@@ -127,6 +130,7 @@ void Viewer::Run()
         d_cam.Activate(s_cam);
         glClearColor(1.0f,1.0f,1.0f,1.0f);
         mpMapDrawer->DrawCurrentCamera(Twc);
+        current_twc = Twc;
         if(menuShowKeyFrames || menuShowGraph)
             mpMapDrawer->DrawKeyFrames(menuShowKeyFrames,menuShowGraph);
         if(menuShowPoints)
@@ -228,5 +232,11 @@ void Viewer::Release()
     unique_lock<mutex> lock(mMutexStop);
     mbStopped = false;
 }
+
+pangolin::OpenGlMatrix Viewer::getFrame()
+{
+    return current_twc;
+}
+
 
 }

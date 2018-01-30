@@ -55,7 +55,9 @@ public:
     bool isStopped();
 
     void Release();
-
+    
+    pangolin::OpenGlMatrix getFrame();
+    pangolin::OpenGlMatrix current_twc;
 private:
 
     bool Stop();
@@ -64,7 +66,7 @@ private:
     FrameDrawer* mpFrameDrawer;
     MapDrawer* mpMapDrawer;
     Tracking* mpTracker;
-
+    
     // 1/fps in ms
     double mT;
     float mImageWidth, mImageHeight;

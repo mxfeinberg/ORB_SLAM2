@@ -40,12 +40,27 @@ endif()
 
 find_package(Eigen3 3.1.0 REQUIRED)
 find_package(Pangolin REQUIRED)
+find_package(ZeroMQ REQUIRED)
+#find_package(PkgConfig)
+
+#pkg_check_modules(PC_ZeroMQ QUIET zmq)
+
+#find_path(ZeroMQ_INCLUDE_DIR
+#           NAMES zmq.hpp
+#           PATHS ${PC_ZeroMQ_INCLUDE_DIRS})
+
+#find_library(ZeroMQ_LIBRARY
+#              NAMES zmq
+#              PATHS ${PC_ZeroMQ_LIBRARY_DIRS})
+
 
 include_directories(
 ${PROJECT_SOURCE_DIR}
 ${PROJECT_SOURCE_DIR}/../../../
 ${PROJECT_SOURCE_DIR}/../../../include
 ${Pangolin_INCLUDE_DIRS}
+${cppzmq_INCLUDE_DIR}
+${ZeroMQ_INCLUDE_DIR}
 )
 
 set(LIBS 
@@ -55,6 +70,8 @@ ${Pangolin_LIBRARIES}
 ${PROJECT_SOURCE_DIR}/../../../Thirdparty/DBoW2/lib/libDBoW2.so
 ${PROJECT_SOURCE_DIR}/../../../Thirdparty/g2o/lib/libg2o.so
 ${PROJECT_SOURCE_DIR}/../../../lib/libORB_SLAM2.so
+${ZeroMQ_LIBRARY}
+${cppzmq_LIBRARY}
 )
 
 # Node for monocular camera
@@ -62,7 +79,24 @@ rosbuild_add_executable(Mono
 src/ros_mono.cc
 )
 
+rosbuild_add_executable(image_streamer
+src/image_streamer.cc
+)
+
+rosbuild_add_executable(communicate
+src/communicate.cc
+)
+
+
 target_link_libraries(Mono
+${LIBS}
+)
+
+target_link_libraries(image_streamer
+${LIBS}
+)
+
+target_link_libraries(communicate
 ${LIBS}
 )
 
